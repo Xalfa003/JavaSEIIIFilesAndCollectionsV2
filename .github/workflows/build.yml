@@ -17,7 +17,7 @@ permissions:
 env:
   CI_REGISTRY: ghcr.io
   CI_REGISTRY_USER: ${{ github.actor }}
-  IMAGE_NAME: 1-pf/JavaSEIIIFilesAndCollections
+  IMAGE_NAME: 1-pf/javaseiiifilessndcollections
 
 jobs:
   version:
@@ -31,7 +31,7 @@ jobs:
         uses: google-github-actions/release-please-action@v4
         with:
           release-type: maven
-          package-name: JavaSEIIIFilesAndCollections
+          package-name: javaseiiifilessndcollections
 
   docker_build:
     name: Build docker image
@@ -64,11 +64,11 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.TEST_SERVER_KEY }}
           script: |
-            cd /var/JavaSEIIIFilesAndCollections
+            cd /var/javaseiiifilessndcollections
             echo ${{ secrets.GITHUB_TOKEN }} | docker login --username ${{env.CI_REGISTRY_USER}} --password-stdin ${{ env.CI_REGISTRY }}
-            previous_image=$(docker images JavaSEIIIFilesAndCollections:latest -qa)
+            previous_image=$(docker images javaseiiifilessndcollections:latest -qa)
             docker pull ${{ env.CI_REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-            docker tag ${{ env.CI_REGISTRY }}/${{ env.IMAGE_NAME }}:latest JavaSEIIIFilesAndCollections:latest
+            docker tag ${{ env.CI_REGISTRY }}/${{ env.IMAGE_NAME }}:latest javaseiiifilessndcollections:latest
             docker rmi ${{ env.CI_REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             docker compose up -d --build application 
             docker rmi $previous_image
